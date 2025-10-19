@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault(); 
     
             // PENTING: Ganti URL ini dengan URL Web App Anda dari Google Apps Script
-            const scriptURL = 'https://script.google.com/macros/s/xxxxxxxxx/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx87r_26tRB-_0NZfdLZZYKEUhaWFBFKDqUC1_jvPE956iLbQ_RYUyy2NCXInEYV1Z8ig/exec';
     
             const submitButton = rsvpForm.querySelector('button[type="submit"]');
             
