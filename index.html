@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Fulan & Fulanah</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+
+    <section id="cover" class="cover">
+        <h1>Fulan & Fulanah</h1>
+        <p>Kepada Yth. <br><span>Bapak/Ibu/Saudara/i</span></p>
+        <p class="guest-name">[Nama Tamu Undangan]</p> <button id="open-invitation">Buka Undangan</button>
+    </section>
+
+    <main id="main-content" class="main-content">
+
+        <audio id="background-music" src="httpsuploads/audio/background-music.mp3" loop></audio>
+
+        <button id="music-toggle" class="music-toggle-button">
+            </button>
+
+        <section id="mempelai" class="page-section" data-aos="fade-up">
+            <h2>Pasangan Mempelai</h2>
+            <p>Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan:</p>
+            
+            <div class="mempelai-container">
+                <div class="mempelai-card" data-aos="fade-right">
+                    <img src="httpsuploads/images/mempelai-pria.jpg" alt="Mempelai Pria" class="mempelai-img">
+                    <h3>Fulan</h3>
+                    <p>Putra dari Bapak Fulan & Ibu Fulanah</p>
+                </div>
+                <div class="mempelai-card" data-aos="fade-left">
+                    <img src="httpsuploads/images/mempelai-wanita.jpg" alt="Mempelai Wanita" class="mempelai-img">
+                    <h3>Fulanah</h3>
+                    <p>Putri dari Bapak Fulan & Ibu Fulanah</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="acara" class="page-section" data-aos="fade-up">
+            <h2>Detail Acara</h2>
+            <div class="acara-container">
+                <div class="acara-card" data-aos="zoom-in">
+                    <h3>Akad Nikah</h3>
+                    <p><strong>Hari:</strong> Minggu, 26 Oktober 2025</p>
+                    <p><strong>Pukul:</strong> 09:00 - 10:00 WIB</p>
+                    <p><strong>Tempat:</strong> Masjid Istiqlal, Jakarta</p>
+                </div>
+                <div class="acara-card" data-aos="zoom-in" data-aos-delay="200">
+                    <h3>Resepsi</h3>
+                    <p><strong>Hari:</strong> Minggu, 26 Oktober 2025</p>
+                    <p><strong>Pukul:</strong> 11:00 - 14:00 WIB</p>
+                    <p><strong>Tempat:</strong> Gedung Smesco, Jakarta</p>
+                    <a href="httpsA://maps.app.goo.gl/abcdefg" target="_blank" class="cta-button">Lihat Lokasi</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="countdown-section" class="page-section" data-aos="fade-up">
+            <h2>Hitung Mundur Acara</h2>
+            <div id="countdown" class="countdown-timer">
+                <div><span id="days">00</span> Hari</div>
+                <div><span id="hours">00</span> Jam</div>
+                <div><span id="minutes">00</span> Menit</div>
+                <div><span id="seconds">00</span> Detik</div>
+            </div>
+        </section>
+
+        <section id="gallery" class="page-section" data-aos="fade-up">
+            <h2>Galeri Kenangan</h2>
+            <div class="gallery-container">
+                <img src="httpsuploads/images/gallery-1.jpg" alt="Galeri 1" data-aos="zoom-in-up">
+                <img src="httpsuploads/images/gallery-2.jpg" alt="Galeri 2" data-aos="zoom-in-up" data-aos-delay="100">
+                <img src="httpsuploads/images/gallery-3.jpg" alt="Galeri 3" data-aos="zoom-in-up" data-aos-delay="200">
+                <img src="httpsuploads/images/gallery-4.jpg" alt="Galeri 4" data-aos="zoom-in-up" data-aos-delay="300">
+            </div>
+        </section>
+
+        <section id="rsvp" class="page-section" data-aos="fade-up">
+            <h2>Konfirmasi Kehadiran & Ucapan</h2>
+            <form id="rsvp-form" class="rsvp-form">
+                <div class="form-group">
+                    <label for="nama">Nama Anda:</label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
+                <div class="form-group">
+                    <label for="kehadiran">Konfirmasi Kehadiran:</label>
+                    <select id="kehadiran" name="kehadiran">
+                        <option value="hadir">Akan Hadir</option>
+                        <option value="tidak_hadir">Maaf, Tidak Bisa Hadir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ucapan">Ucapan & Doa:</label>
+                    <textarea id="ucapan" name="ucapan" rows="4"></textarea>
+                </div>
+                <button type="submit" class="cta-button">Kirim</button>
+            </form>
+            
+            <div id="guestbook-display">
+                <h4>Ucapan Tamu:</h4>
+                <div class="guestbook-entry">
+                    <strong>Budi</strong> - <span>Hadir</span>
+                    <p>Selamat ya Fulan & Fulanah!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hadiah" class="page-section" data-aos="fade-up">
+            <h2>Amplop Digital</h2>
+            <p>Bagi Anda yang ingin memberikan tanda kasih, bisa melalui:</p>
+            <div class="hadiah-card" data-aos="zoom-in">
+                <strong>Bank BCA</strong>
+                <p>1234567890 a/n Fulan</p>
+                <button class="cta-button-small" onclick="copyToClipboard('1234567890')">Salin No. Rek</button>
+            </div>
+        </section>
+
+        <footer>
+            <p>Terima kasih atas doa restu Anda.</p>
+            <p>Fulan & Fulanah</p>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Inisialisasi AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000, // Durasi animasi dalam milidetik
+            once: true, // Apakah animasi hanya terjadi sekali
+        });
+    </script>
+</body>
+</html>
