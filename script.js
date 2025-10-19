@@ -1,3 +1,9 @@
+/*
+=========================================
+--- SCRIPT UNDANGAN DIGITAL ---
+=========================================
+*/
+
 // Menunggu seluruh konten HTML dimuat sebelum menjalankan script
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -11,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set status awal musik (paused)
     let isPlaying = false;
     musicToggleButton.classList.add('paused');
-    musicToggleButton.innerHTML = '&#9658;'; // Ikon Play
+    musicToggleButton.innerHTML = '►'; // Ikon Play
 
     // Saat tombol "Buka Undangan" di-klik
     openButton.addEventListener('click', function() {
@@ -24,11 +30,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 1000); // Samakan dengan durasi transisi di CSS
 
         // 3. Putar musik
-        audio.play();
+        // Kita gunakan .play() dan tangani error jika browser memblokir autoplay
+        audio.play().catch(error => {
+            console.log("Autoplay musik diblokir oleh browser. Menunggu interaksi user.");
+        });
+        
         isPlaying = true;
         musicToggleButton.classList.remove('paused');
         musicToggleButton.classList.add('playing');
-        musicToggleButton.innerHTML = '&#10074;&#10074;'; // Ikon Pause
+        musicToggleButton.innerHTML = '❚❚'; // Ikon Pause
     });
 
     // Saat tombol kontrol musik di-klik
@@ -37,12 +47,12 @@ document.addEventListener("DOMContentLoaded", function() {
             audio.pause();
             musicToggleButton.classList.remove('playing');
             musicToggleButton.classList.add('paused');
-            musicToggleButton.innerHTML = '&#9658;'; // Ikon Play
+            musicToggleButton.innerHTML = '►'; // Ikon Play
         } else {
             audio.play();
             musicToggleButton.classList.remove('paused');
             musicToggleButton.classList.add('playing');
-            musicToggleButton.innerHTML = '&#10074;&#10074;'; // Ikon Pause
+            musicToggleButton.innerHTML = '❚❚'; // Ikon Pause
         }
         isPlaying = !isPlaying; // Balik status isPlaying
     });
@@ -50,17 +60,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- 2. FITUR HITUNG MUNDUR (COUNTDOWN) ---
     
-    // Tetapkan tanggal acara (Tahun, Bulan (dimulai dari 0), Tanggal, Jam, Menit, Detik)
-    // Contoh: 26 Oktober 2025 jam 09:00:00
+    // PENTING: Ganti tanggal ini ke tanggal acara Anda!
+    // Format: Tahun, Bulan (0-11), Tanggal, Jam, Menit, Detik
+    // Contoh: 26 Oktober 2025 jam 09:00:00 (Oktober adalah bulan ke-9)
     const targetDate = new Date(2025, 9, 26, 9, 0, 0).getTime();
 
     // Perbarui hitungan setiap 1 detik
     const countdownInterval = setInterval(function() {
         
-        // Dapatkan tanggal dan waktu hari ini
         const now = new Date().getTime();
-        
-        // Hitung selisih waktu
         const distance = targetDate - now;
         
         // Hitung hari, jam, menit, detik
@@ -70,22 +78,78 @@ document.addEventListener("DOMContentLoaded", function() {
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
         // Tampilkan hasilnya di HTML
-        document.getElementById('days').innerText = String(days).padStart(2, '0');
-        document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-        document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-        document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        // Cek dulu apakah elemennya ada sebelum diisi
+        if (document.getElementById('days')) {
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
         
         // Jika waktu acara sudah tiba
         if (distance < 0) {
             clearInterval(countdownInterval);
-            document.getElementById('countdown').innerHTML = "Acara Telah Dimulai!";
+            if(document.getElementById('countdown')) {
+                document.getElementById('countdown').innerHTML = "Acara Telah Dimulai!";
+            }
         }
     }, 1000);
 
-});
 
-// --- 3. FITUR SALIN TEKS (Copy to Clipboard) ---
-// Fungsi ini harus diletakkan di luar 'DOMContentLoaded' agar bisa dipanggil dari atribut 'onclick'
+    // --- 3. FITUR FORMULIR RSVP (Google Sheets) ---
+    const rsvpForm = document.getElementById('rsvp-form');
+    
+    if (rsvpForm) {
+        rsvpForm.addEventListener('submit', function(e) {
+            // Mencegah formulir mengirim data secara default
+            e.preventDefault(); 
+    
+            // PENTING: Ganti URL ini dengan URL Web App Anda dari Google Apps Script
+            const scriptURL = 'https://script.google.com/macros/s/xxxxxxxxx/exec';
+    
+            const submitButton = rsvpForm.querySelector('button[type="submit"]');
+            
+            // Nonaktifkan tombol saat mengirim
+            submitButton.disabled = true;
+            submitButton.innerText = 'Mengirim...';
+    
+            const formData = new FormData(rsvpForm);
+    
+            // Kirim data menggunakan 'fetch'
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.result === 'success') {
+                    alert('Terima kasih! Konfirmasi & ucapan Anda telah terkirim.');
+                    rsvpForm.reset(); // Kosongkan formulir
+                } else {
+                    // Jika skrip Google mengembalikan error
+                    throw new Error(data.message || 'Gagal mengirim data.');
+                }
+            })
+            .catch(error => {
+                // Jika terjadi error jaringan atau lainnya
+                console.error('Error!', error.message);
+                alert('Maaf, terjadi kesalahan. Silakan coba lagi.');
+            })
+            .finally(() => {
+                // Apapun hasilnya (sukses/gagal), aktifkan kembali tombolnya
+                submitButton.disabled = false;
+                submitButton.innerText = 'Kirim';
+            });
+        });
+    }
+
+}); // Penutup untuk 'DOMContentLoaded'
+
+
+// --- 4. FITUR SALIN TEKS (Copy to Clipboard) ---
+// Fungsi ini harus diletakkan di luar 'DOMContentLoaded' 
+// agar bisa dipanggil dari atribut 'onclick' di HTML
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(function() {
         alert('Nomor rekening berhasil disalin!');
